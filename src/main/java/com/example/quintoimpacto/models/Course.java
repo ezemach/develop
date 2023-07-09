@@ -12,16 +12,19 @@ public class Course {
     private Long id;
     private String name;
     private String description;
+
+    private String imageUrl;
     @ElementCollection
     private List<Shift> shifts = new ArrayList<>();
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private Set<Inscription> inscriptions = new HashSet<>();
     public Course() {
     }
-    public Course(String name, String description, List<Shift> shifts) {
+    public Course(String name, String description, List<Shift> shifts, String imageUrl) {
         this.name = name;
         this.description = description;
         this.shifts = shifts;
+        this.imageUrl = imageUrl;
     }
     public void addInscription(Inscription inscription){
         inscription.setCourse(this);
@@ -40,4 +43,7 @@ public class Course {
     public void setDescription(String description) {this.description = description;}
     public void setShifts(List<Shift> shifts) {this.shifts = shifts;}
     public void setInscriptions(Set<Inscription> inscriptions) {this.inscriptions = inscriptions;}
+
+    public String getImageUrl() {return imageUrl;}
+    public void setImageUrl(String imageUrl) {this.imageUrl = imageUrl;}
 }

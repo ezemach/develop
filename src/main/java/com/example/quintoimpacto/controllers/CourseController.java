@@ -43,7 +43,8 @@ public class CourseController {
         Course newCourse = new Course(
                 courseApplicationDTO.getName(), // Name
                 courseApplicationDTO.getDescription(), // Description
-                courseApplicationDTO.getShifts().stream().collect(toList())); // Shifts
+                courseApplicationDTO.getShifts().stream().collect(toList()), // Shifts
+                courseApplicationDTO.getImageUrl());// image
         // Save new course
         courseRepository.save(newCourse);
 
