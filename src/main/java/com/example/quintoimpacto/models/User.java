@@ -21,6 +21,7 @@ public class User {
     private String city;
     private String address;
     private String password;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Inscription> inscriptions = new HashSet<>();
     public User() {

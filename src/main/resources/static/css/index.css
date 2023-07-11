@@ -898,13 +898,21 @@ ul {
 	object-fit: contain;
 }
 
-#imagenPequena {
-	max-height: 100%;
-	width: 100%;
-	border-radius: 5%;
-	object-fit: cover;
-	cursor: pointer;
+.div-usuarios{
+	color: #000000;
+
 }
+
+#managerUser{
+	background-color: #3f58eb;
+	color: #ddd;
+}
+
+.div-productos-admin{
+	background-color: var(--color-azul);
+	border-radius: 2%;
+}
+
 
 
 

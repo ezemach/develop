@@ -5,38 +5,41 @@ createApp({
 		return {
 			rol:'',
 			newUser:{
-			ssn:'',	
-			name:'',
-			lastName:'',
-			email:'',
-			phone:'',
-			birthday:'',
-			state:'',
-			city:'',
-			address:'',
-			password:'',
-			},
+                ssn:'',	
+                name:'',
+                lastName:'',
+                email:'',
+                phone:'',
+                birthday:'',
+                state:'',
+                city:'',
+                address:'',
+                password:'',
+                },
+            search: '',
 			passwordLogin:'',
 			emailLogin:'',
 			cursoPorId:'',
-			imgCursoPorId:''
+			imgCursoPorId:'',
+            coursesFilter:""
 			
 		};
 	},
 	created() {
 		this.data();
-		this.courses();
+		this.Mcourses();
 	},
 	mounted() {
 		this.roles();
 	},
 	methods: {
-		courses() {
+		Mcourses() {
 			axios
 				.get('/api/courses')
 				.then(response => {
-					this.courses = response.data.slice(0,3);
-					console.log(this.courses.slice(0,3))
+					this.courses = response.data;
+                    this.coursesFilter = this.courses
+					console.log(this.courses)
 				})
 				.catch(error => console.log(error));
 		},
@@ -144,19 +147,13 @@ createApp({
 				allowOutsideClick: () => !Swal.isLoading(),
 			});
 		},
-		
+		filterCourse() {
+			this.coursesFilter= this.courses.filter(course => {
+				return course.name.toLowerCase().includes(this.search.toLowerCase());
+			});
+		},
 }
 }).mount('#app');
-
-// window.addEventListener('load', () => {
-// 	const loader = document.querySelector('.loader');
-
-// 	loader.classList.add('loader-hidden');
-
-// 	loader.addEventListener('transitioned', () => {
-// 		document.body.removeChild('loader');
-// 	});
-// });
 
 /* Contraseña */
 const pwShowHide = document.querySelectorAll('.pw-hide');

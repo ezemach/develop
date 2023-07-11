@@ -2,6 +2,7 @@ package com.example.quintoimpacto.DTOs;
 
 import com.example.quintoimpacto.models.Shift;
 
+import java.util.List;
 import java.util.Set;
 
 public class CourseApplicationDTO {
@@ -14,6 +15,9 @@ public class CourseApplicationDTO {
     public String getName() {return name;}
     public String getDescription() {return description;}
     public Set<Shift> getShifts() {return shifts;}
-    public String getImageUrl() {return imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
+

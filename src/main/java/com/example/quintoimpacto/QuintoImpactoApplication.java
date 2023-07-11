@@ -6,10 +6,12 @@ import com.example.quintoimpacto.models.User;
 import com.example.quintoimpacto.repositories.CourseRepository;
 import com.example.quintoimpacto.repositories.InscriptionRepository;
 import com.example.quintoimpacto.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class QuintoImpactoApplication {
     public static void main(String[] args) {
         SpringApplication.run(QuintoImpactoApplication.class, args);
     }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Bean
     public CommandLineRunner initData(UserRepository userRepository, InscriptionRepository inscriptionRepository, CourseRepository courseRepository){
         return (args -> {
@@ -26,13 +31,13 @@ public class QuintoImpactoApplication {
                     "001-01-5554",
                     "Michael",
                     "Jordan",
-                    "michaeljordan@gmail.com",
+                    "michael@gmail.com",
                     "843-444-1525",
                     "03/16/1995",
                     "New York",
                     "Mount Vernon",
                     "326 Kennedy Dr",
-                    "basketball");
+                    passwordEncoder.encode("basketball"));
             // Save Student 1
             userRepository.save(Student1);
 
@@ -41,13 +46,13 @@ public class QuintoImpactoApplication {
                     "001-01-5554",
                     "Paul",
                     "Aaron",
-                    "aaronpaul@gmail.com",
+                    "aaron@gmail.com",
                     "561-249-0865",
                     "15/05/1987",
                     "Florida",
                     "Miami",
                     "360 NW 98th St",
-                    "breakingbad");
+                    passwordEncoder.encode("aaron"));
             // Save Student 2
             userRepository.save(Student2);
 
@@ -56,13 +61,13 @@ public class QuintoImpactoApplication {
                     "001-01-5560",
                     "Walter",
                     "White",
-                    "walterwhitel@gmail.com",
+                    "walter@gmail.com",
                     "561-249-0877",
                     "04/12/1987",
                     "New York",
                     "California",
                     "380 99th St",
-                    "breakingbad1");
+                    passwordEncoder.encode("walter"));
             // Save Student 3
             userRepository.save(Student3);
 
@@ -77,7 +82,7 @@ public class QuintoImpactoApplication {
                     "New York",
                     "California",
                     "380 40th St",
-                    "teacher1");
+                    passwordEncoder.encode("teacher1"));
             //Save Teacher 1
             userRepository.save(teacher1);
 
@@ -92,7 +97,7 @@ public class QuintoImpactoApplication {
                     "New York",
                     "California",
                     "370 40th St",
-                    "teacher2");
+                    passwordEncoder.encode("teacher2"));
             //Save Teacher 1
             userRepository.save(teacher2);
 
@@ -107,7 +112,7 @@ public class QuintoImpactoApplication {
                     "New York",
                     "California",
                     "200 40th St",
-                    "admin");
+                    passwordEncoder.encode("admin"));
             //Save admin
             userRepository.save(admin);
 
@@ -116,7 +121,7 @@ public class QuintoImpactoApplication {
                     "Full Stack web developer",
                     "is a specialist in the development of websites that integrates the design of the customer experience on a page, as well as the programming and maintenance of the internal architecture of the site.",
                     List.of(Shift.MORNING),
-                    "https://ibb.co/WzzS9HN");
+                    "./img/Courses/card1Computacion.jpg");
             //Save Course 1
             courseRepository.save(course1);
 
@@ -125,7 +130,7 @@ public class QuintoImpactoApplication {
                     "Community Manager",
                     "Setting and implementing social media and communication campaigns to align with marketing strategies.",
                     List.of(Shift.MORNING),
-                    "https://ibb.co/xsCFG5v");
+                    "./img/Courses/card2Management.jpg");
             //Save Course 2
             courseRepository.save(course2);
 
@@ -134,16 +139,16 @@ public class QuintoImpactoApplication {
                     "Back end developer",
                     "responsibilities include creating, maintaining, testing, and debugging the entire back end of an application or system.",
                     List.of(Shift.AFTERNOON),
-                    "https://ibb.co/4Z5X8yw");
+                    "./img/Courses/card3ComunityManager.jpg");
             //Save Course 3
             courseRepository.save(course3);
 
             //Course 4
             Course course4 = new Course(
-                    "Full Stack web developer",
+                    "Front end developer",
                     "computer programmers who specialize in website design. ",
                     List.of(Shift.AFTERNOON),
-                    "https://ibb.co/7gRNHBF");
+                    "./img/Courses/card4.jpg");
             //Save Course 4
             courseRepository.save(course4);
 
@@ -152,7 +157,7 @@ public class QuintoImpactoApplication {
                     "communication",
                     " the exchange of ideas and thoughts within two or more individuals. It can be done through writing, speech, gestures, symbols, or written communication.  ",
                     List.of(Shift.AFTERNOON),
-                    "https://ibb.co/0Fnh0YW");
+                    "./img/Courses/card5.jpg");
             //Save Course 5
             courseRepository.save(course5);
 
@@ -161,7 +166,7 @@ public class QuintoImpactoApplication {
                     "Project management",
                     "the application of processes, methods, skills, knowledge and experience to achieve specific project objectives according to the project acceptance criteria within agreed parameters. ",
                     List.of(Shift.NIGHT),
-                    "https://ibb.co/qkhW2xf");
+                    "./img/Courses/card6.jpg");
             //Save Course 6
             courseRepository.save(course6);
 
@@ -170,7 +175,7 @@ public class QuintoImpactoApplication {
                     "QA Tester",
                     "play a critical role in delivering high quality, perfectly-functioning software and web applications to customers. ",
                     List.of(Shift.AFTERNOON),
-                    "https://ibb.co/QYZmbfc");
+                    "./img/Courses/card7.jpg");
             //Save Course 7
             courseRepository.save(course7);
 
@@ -179,7 +184,7 @@ public class QuintoImpactoApplication {
                     "Digital Design",
                     "is a type of visual communication that presents information or a product or service through a digital interface. ",
                     List.of(Shift.NIGHT),
-                    "https://ibb.co/7gRNHBF");
+                    "./img/Courses/card8.jpg");
             //Save Course 8
             courseRepository.save(course8);
 
@@ -188,7 +193,7 @@ public class QuintoImpactoApplication {
                     "Administrative Assistant",
                     "making travel and meeting arrangements, preparing reports and maintaining appropriate filing systems. ",
                     List.of(Shift.NIGHT),
-                    "https://ibb.co/Y0MF7ZL");
+                    "./img/Courses/card9.jpg");
             //Save Course 9
             courseRepository.save(course9);
 

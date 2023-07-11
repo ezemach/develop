@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 public class UserController {
@@ -25,8 +28,18 @@ public class UserController {
         return userRepository.findAll()
                 .stream()
                 .map(user -> new UserDTO(user))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
+    // Obtain rol
+    @GetMapping("/api/users/current/rol")
+    public String getUserRol(Authentication authentication){
+        if(authentication != null) {
+            return authentication.getAuthorities().stream().collect(toList()).get(0).toString();
+        }
+        return "VISITOR";
+    }
+
+
 
     // Create user
     @PostMapping("/api/users")

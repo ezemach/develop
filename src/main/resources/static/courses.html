@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quinto Impacto - Courses</title>
     <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="./css/index.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -29,15 +29,26 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end gap-3" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                            <a class="nav-link texto-nav hover-a text-center" aria-current="page"
-                                href="../index.html">Home</a>
+                            <a class="nav-link  texto-nav hover-a text-center" aria-current="page"
+                                href="./index.html">Home</a>
                             <a class="nav-link activo texto-nav hover-a text-center" href="#">Courses</a>
                             <template v-if="rol === 'ADMIN'">
                                 <a class="nav-link texto-nav hover-a text-center"
-                                    href="./manager.html">Administrador</a>
+                                    href="./manager.html">Administrator</a>
+                            </template>
+                            <template v-if="rol === 'TEACHER'">
+                                <a class="nav-link texto-nav hover-a text-center"
+                                    href="./teacherManager.html">Teacher</a>
                             </template>
                         </div>
+                        <template v-if="rol === 'VISITOR'">
                         <button id="botonIngresar" type="button" class="nav-link texto-nav hover-a text-center" data-bs-toggle="modal" data-bs-target="#ModalForm">Login</button>
+                        </template>
+                        <template v-else>
+                            <a class="nav-link texto-nav hover-iconos texto-iconos text-center" href="#"
+                                ><i @click="salir" class="bi bi-box-arrow-right"></i
+                            ></a>
+                        </template>
                     </div>
                 </div>
             </nav>
@@ -58,57 +69,46 @@
                 </a>
             </div>
 
-            
 
-            <div class="pb-5 mt-5">
-                <h2 class="text-center fs-1">All our available courses</h2> 
+            <div class="pb-5 mt-3">
+                <h2 class="text-center fs-1">All our courses</h2>
             </div>
 
+            <div class="input-group rounded buscar pb-5">
+                <input
+                    type="search"
+                    class="form-control rounded"
+                    placeholder="Search"
+                    aria-label="Search"
+                    aria-describedby="search-addon"
+                    v-model="search"
+                    @keyup="filterCourse"
+                />
+            </div>
             
-      
-
             <div class="d-flex flex-wrap justify-content-center gap-3 m-5">
+                <template v-for="course of coursesFilter">
                 <div class="tarjeta flex-column">
                     <div class="d-flex flex-column align-items-center">
-                    <div class="titulo">Web Development</div>
+                    <div class="titulo">{{course.name}}</div>
                     <div class="cuerpo">
-                        <img src="/img/Courses/card1Computacion.jpg" alt="muestra"/>
+                        <img :src="course.imageUrl"alt="muestra"/>
+                
                        
                     </div>
                     </div>
-                    <div class="pie">
+                    <div class="pie d-flex justify-content-around">
                         <a href="#"data-bs-toggle="modal"
-                        data-bs-target="#exampleProduct-xl">More Information</a>
+                        data-bs-target="#exampleProduct-xl"
+                        @click="obtenerIdCurso(course.id)">More Information</a>
+                        <a href="#"data-bs-toggle="modal"
+                        data-bs-target="#exampleProduct-xl"
+                        @click="obtenerIdCurso(course.id)">Inscription</a>
                     </div>
                 </div>
-                <div class="tarjeta flex-column">
-                    <div class="d-flex flex-column align-items-center">
-                    <div class="titulo">Management</div>
-                    <div class="cuerpo">
-                        <img src="/img/Courses/card2Management.jpg" alt="muestra" />
-           
-                    </div>
-                    </div>
-                    <div class="pie">
-                        <a href="#"data-bs-toggle="modal"
-                        data-bs-target="#exampleProduct-xl">More Information</a>
-                    </div>
-                </div>
-                <div class="tarjeta flex-column">
-                    <div class="d-flex flex-column align-items-center">
-                    <div class="titulo">Comunity Manager</div>
-                    <div class="cuerpo">
-                        <img src="/img/Courses/card3ComunityManager.jpg" alt="muestra" />
-                    
-                    </div>
-                    </div>
-                    <div class="pie">
-                        <a href="#"data-bs-toggle="modal"
-                        data-bs-target="#exampleProduct-xl">More Information</a>
-                    </div>
-                </div>
-            </div>
 
+            </div>
+        </template>
         </main>
 
         <footer class="footer pt-5">
@@ -136,12 +136,12 @@
             <div class="pagos-icon-container">
                 <span>Payment methods</span>
                 <div class="img-pagos">
-                    <img src="../img/Mercado Pago.png" alt="Mercado Pago" />
-                    <img src="../img/Visa.png" alt="Visa" />
-                    <img src="../img/Mastercard.png" alt="Mastercard" />
-                    <img src="../img/American Express.png" alt="American Express" />
-                    <img src="../img/PSE.png" alt="PSE" />
-                    <img src="../img/Efecty.png" alt="Efecty" />
+                    <img src="./img/Mercado Pago.png" alt="Mercado Pago" />
+                    <img src="./img/Visa.png" alt="Visa" />
+                    <img src="./img/Mastercard.png" alt="Mastercard" />
+                    <img src="./img/American Express.png" alt="American Express" />
+                    <img src="./img/PSE.png" alt="PSE" />
+                    <img src="./img/Efecty.png" alt="Efecty" />
                 </div>
             </div>
             <span class="copyright">&copy;2023, Quinto Imptacto. All rights reserved.</span>
@@ -159,9 +159,9 @@
 								<div class="login form">
 									<header>Login</header>
 									<form @submit.prevent="ingresar">
-										<input type="email" placeholder="E-mail" v-model="correo" />
+										<input type="email" placeholder="E-mail" v-model="emailLogin" />
 										<div class="inputBox">
-											<input type="password" placeholder="password" v-model="contraseña" name="contraseña" />
+											<input type="password" placeholder="password" v-model="passwordLogin" name="password" />
 											<i class="fa-regular fa-eye-slash pw-hide"></i>
 										</div>
 										<a href="#">have you forgotten your password?</a>
@@ -179,15 +179,15 @@
 									<header>Sign up</header>
 									<form @submit.prevent="register">
 										<div class="d-flex gap-1">
-											<input type="text" placeholder="Nombre" required v-model="Nombre" />
+											<input type="text" placeholder="Name" required v-model="name" />
 										</div>
 										<div class="d-flex gap-1">
-											<input type="text" placeholder="Apellido" required v-model="Apellido" />
+											<input type="text" placeholder="LastName" required v-model="lastName" />
 										</div>
-										<input type="tel" placeholder="Phone" required v-model="telefono" />
-										<input type="text" placeholder="E-mail" required v-model="correoRegistro" />
+										<input type="tel" placeholder="Phone" required v-model="phone" />
+										<input type="text" placeholder="E-mail" required v-model="email" />
 										<div class="inputBox">
-											<input type="password" placeholder="Password" required v-model="contraseñaRegistro" name="contraseña" />
+											<input type="password" placeholder="Password" required v-model="password" name="password" />
 											<i class="fa-regular fa-eye-slash pw-hide"></i>
 										</div>
 										<input type="submit" class="button" value="Register" />
@@ -279,63 +279,45 @@
             </div>
         </div>
         <!-- MODAL INFO -->
-			<div class="modal fade" id="exampleProduct-xl" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-				<div class="modal-dialog modal-xl modal-dialog-centered justify-content-center align-items-center" role="document">
-					<div class="modal-content" id="modalProducto">
-						<div class="modal-body d-flex flex-column flex-lg-row gap-2">
-							<div>
-								<div class="d-flex flex-column mt-3 me-1 gap-3 align-items-center">
-									<div class="justify-content-center align-items-center" id="contenedorImagenes">
-										<div class="d-flex justify-content-center align-items-center">
-											<div class="justify-content-center">
-												<!-- <img id="imagenGrande" :src="imgProductoPorId[0]" class="img-fluid" /> -->
-											</div>
-										</div>
+        <div class="modal fade" id="exampleProduct-xl" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+            <div class="modal-dialog modal-xl modal-dialog-centered justify-content-center align-items-center" role="document">
+                <div class="modal-content" id="modalProducto">
+                    <div class="modal-body d-flex flex-column flex-lg-row gap-2">
+                        <div>
+                            <div class="d-flex flex-column mt-3 me-1 gap-3 align-items-center">
+                                <div class="justify-content-center align-items-center" id="contenedorImagenes">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="justify-content-center">
+                                            <img id="imagenGrande" :src="imgCursoPorId" class="img-fluid" />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start align-items-start mt-2">
+                                        <div id="contenedorImagenPequena">
+                                            
+                                        </div>
+                                    </div>
 
-										<div class="d-flex justify-content-start align-items-start mt-2">
-											<div>
-												<!-- <img id="imagenPequena" :src="imgProductoPorId[1]" /> -->
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+                                </div>
+                            </div>
+                        </div>
 
-							<div class="mt-3 mx-2">
-								<!-- <h5 class="text-muted fs-2">{{productoPorId.subCategoria}}</h5>
-								<h5 class="fs-2">{{productoPorId.nombre}}</h5> -->
-								<p class="text-muted fs-2 mt-2">
-									<!-- ${{ productoPorId.precio ? productoPorId.precio.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '' }} -->
-								</p>
-								<!-- <div class="mt-3 gap-2 fs-2 mb-4 px-2 text-justify">{{productoPorId.descripcion}}</div> -->
-								<div class="d-flex flex-wrap align-items-start gap-3">
-									<div>
-										<!-- <div class="gap-1 fs-2" :class="{ 'talle-disponible': productoPorId.tallaSuperior !== null }"> -->
-											<!-- <template v-if="productoPorId.tallaSuperior"> -->
-												<!-- <h6 class="text-muted mt-2 fs-2">Talle Superior Disponible:</h6>
-												<div class="ov-btn-grow-box">{{ productoPorId.tallaSuperior }}</div> -->
-											<!-- </template> -->
-											<!-- <template v-else> </template> -->
-										</div>
-									</div>
-									<div>
-										<!-- <div class="gap-1 fs-2" :class="{ 'talle-disponible': productoPorId.tallaInferior !== null }">
-											<template v-if="productoPorId.tallaInferior"> -->
-												<!-- <h6 class="text-muted mt-2 fs-2">Talle Inferior Disponible:</h6>
-												<div class="ov-btn-grow-box">{{ productoPorId.tallaInferior }}</div> -->
-											<!-- </template>
-											<template v-else> </template> -->
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer gap-1 container-fluid" id="contenedorButtons">
-							<button type="button" class="ov-btn-grow-box fs-4" data-bs-dismiss="modal">CERRAR</button>
-						</div>
-					</div>
-				</div>
-			</div>
+                        <div class="mt-3 mx-2">
+                            <h5 class="fs-2">{{cursoPorId.name}}</h5> 
+                            
+                            <div class="mt-3 gap-2 fs-2 mb-4 px-2 text-justify">{{cursoPorId.description}}</div>
+                            <div class="d-flex flex-wrap align-items-start gap-3">
+                                
+                                </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer gap-1 container-fluid" id="contenedorButtons">
+                        <button type="button" class="ov-btn-grow-box fs-4" data-bs-dismiss="modal">CERRAR</button>
+                    </div>
+                </div>
+			
         <!-- MODAL POLITICAS -->
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -428,5 +410,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
-    <script src="./js/index.js"></script>
+    <script src="./js/courses.js"></script>
+
 </body>
+
+</html>

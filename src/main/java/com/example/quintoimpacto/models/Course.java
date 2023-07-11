@@ -12,7 +12,6 @@ public class Course {
     private Long id;
     private String name;
     private String description;
-
     private String imageUrl;
     @ElementCollection
     private List<Shift> shifts = new ArrayList<>();
@@ -38,12 +37,19 @@ public class Course {
     public List<Shift> getShifts() {return shifts;}
     public Set<Inscription> getInscriptions() {return inscriptions;}
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     /* SETTERS */
     public void setName(String name) {this.name = name;}
     public void setDescription(String description) {this.description = description;}
     public void setShifts(List<Shift> shifts) {this.shifts = shifts;}
     public void setInscriptions(Set<Inscription> inscriptions) {this.inscriptions = inscriptions;}
 
-    public String getImageUrl() {return imageUrl;}
-    public void setImageUrl(String imageUrl) {this.imageUrl = imageUrl;}
+
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
