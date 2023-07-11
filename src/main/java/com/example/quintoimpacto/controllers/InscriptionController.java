@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 public class InscriptionController {
@@ -37,11 +40,16 @@ public class InscriptionController {
     }
     // Create a new inscription
     @PostMapping("/api/inscriptions")
-    public ResponseEntity<Object> createInscription(@RequestBody InscriptionApplicationDTO inscriptionApplicationDTO){
+    public ResponseEntity<Object> createInscription(@RequestBody InscriptionApplicationDTO inscriptionApplicationDTO,
+                                                    Authentication authentication){
+        //Get rol authentication
+        String rol = authentication.getAuthorities().stream().collect(toList()).get(0).toString();
         // Get user to enroll
         User userToEnroll = userRepository.findById(inscriptionApplicationDTO.getUser_id()).orElse(null);
         // Get course to enroll user
         Course courseToEnroll = courseRepository.findById(inscriptionApplicationDTO.getCourse_id()).orElse(null);
+        // Get Inscription user
+        List <Inscription> inscriptionUser = userToEnroll.getInscriptions().stream().collect(Collectors.toList());
         // Validation User
         if(userToEnroll == null){
             return new ResponseEntity<>("User doesn't exist", HttpStatus.FORBIDDEN);
@@ -56,6 +64,17 @@ public class InscriptionController {
                 !inscriptionApplicationDTO.getShift().name().equalsIgnoreCase("NIGHT")){
             return new ResponseEntity<>("Wrong shift, the shift available are 'MORNING', 'AFTERNOON' and 'NIGHT'", HttpStatus.FORBIDDEN);
         }
+        if (rol.equals("STUDENT")) {
+            if (inscriptionUser.stream().anyMatch(inscription -> inscription.getCourse().getId().equals(inscriptionApplicationDTO.getCourse_id())))
+                return new ResponseEntity<>("Your already are inscripted in this course", HttpStatus.FORBIDDEN);
+        } else if (rol.equals("TEACHER")) {
+            if (inscriptionUser.stream().anyMatch(inscription -> inscription.getShift().equals(inscriptionApplicationDTO.getShift()))){
+                return new ResponseEntity<>("Your already are inscripted in this shift, please choose other", HttpStatus.FORBIDDEN);
+            }
+
+        }
+
+
         // Create a new inscription
         Inscription newInscription = new Inscription();
         // Set Shift

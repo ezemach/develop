@@ -21,16 +21,24 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/login", "/api/logout", "/api/users").permitAll()
-                .antMatchers(HttpMethod.GET,"/index.html", "/css/index.css", "/courses.html","/js/index.js","/js/courses.js", "/img/**","/img/Courses/**","/api/users/current/rol", "/api/courses","/api/courses/{id}", "/api/users").permitAll()
+                .antMatchers(HttpMethod.GET,"/index.html", "/css/index.css", "/courses.html","/js/index.js","/js/courses.js", "/img/**","/img/Courses/**","/api/users/current/rol", "/api/courses", "/api/courses/{id}").permitAll()
 
                 // USER TEACHER
                 .antMatchers(HttpMethod.GET,
                         "/api/users/current",
-                        "/api/inscriptions/current").hasAnyAuthority("USER", "TEACHER", "ADMIN")
+                        "/api/inscriptions/current",
+                         "/api/users"
+                        //"/api/courses"
+                        ).hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
 
-                .antMatchers(HttpMethod.POST, "/api/inscriptions").hasAnyAuthority("USER", "TEACHER")
+                .antMatchers(HttpMethod.GET,
+                        "/managerTeacher.html"
+                ).hasAnyAuthority("TEACHER", "ADMIN")
 
-                .antMatchers(HttpMethod.DELETE, "/api/inscriptions/{id]").hasAnyAuthority("USER", "TEACHER", "ADMIN")
+
+                .antMatchers(HttpMethod.POST, "/api/inscriptions").hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
+
+                .antMatchers(HttpMethod.DELETE, "/api/inscriptions/{id]").hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
 
                 // ADMIN
                 .antMatchers(HttpMethod.GET,
@@ -42,9 +50,9 @@ public class WebAuthorization {
                         "/h2-console/**").hasAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.POST,
-                        "/api/courses",
+                        "/api/courses"
 
-                        "/api/inscriptions"
+                        //"/api/inscriptions"
                         //"/api/users"
                 ).hasAuthority("ADMIN")
 

@@ -120,7 +120,7 @@ public class QuintoImpactoApplication {
             Course course1 = new Course(
                     "Full Stack web developer",
                     "is a specialist in the development of websites that integrates the design of the customer experience on a page, as well as the programming and maintenance of the internal architecture of the site.",
-                    List.of(Shift.MORNING),
+                    List.of(Shift.MORNING, Shift.AFTERNOON),
                     "./img/Courses/card1Computacion.jpg");
             //Save Course 1
             courseRepository.save(course1);
@@ -129,7 +129,7 @@ public class QuintoImpactoApplication {
             Course course2 = new Course(
                     "Community Manager",
                     "Setting and implementing social media and communication campaigns to align with marketing strategies.",
-                    List.of(Shift.MORNING),
+                    List.of(Shift.MORNING, Shift.AFTERNOON),
                     "./img/Courses/card2Management.jpg");
             //Save Course 2
             courseRepository.save(course2);
@@ -138,7 +138,7 @@ public class QuintoImpactoApplication {
             Course course3 = new Course(
                     "Back end developer",
                     "responsibilities include creating, maintaining, testing, and debugging the entire back end of an application or system.",
-                    List.of(Shift.AFTERNOON),
+                    List.of(Shift.AFTERNOON, Shift.NIGHT),
                     "./img/Courses/card3ComunityManager.jpg");
             //Save Course 3
             courseRepository.save(course3);
@@ -147,7 +147,7 @@ public class QuintoImpactoApplication {
             Course course4 = new Course(
                     "Front end developer",
                     "computer programmers who specialize in website design. ",
-                    List.of(Shift.AFTERNOON),
+                    List.of(Shift.AFTERNOON, Shift.NIGHT),
                     "./img/Courses/card4.jpg");
             //Save Course 4
             courseRepository.save(course4);
@@ -156,7 +156,7 @@ public class QuintoImpactoApplication {
             Course course5 = new Course(
                     "communication",
                     " the exchange of ideas and thoughts within two or more individuals. It can be done through writing, speech, gestures, symbols, or written communication.  ",
-                    List.of(Shift.AFTERNOON),
+                    List.of(Shift.AFTERNOON, Shift.NIGHT),
                     "./img/Courses/card5.jpg");
             //Save Course 5
             courseRepository.save(course5);
@@ -165,7 +165,7 @@ public class QuintoImpactoApplication {
             Course course6 = new Course(
                     "Project management",
                     "the application of processes, methods, skills, knowledge and experience to achieve specific project objectives according to the project acceptance criteria within agreed parameters. ",
-                    List.of(Shift.NIGHT),
+                    List.of(Shift.MORNING, Shift.AFTERNOON,Shift.NIGHT),
                     "./img/Courses/card6.jpg");
             //Save Course 6
             courseRepository.save(course6);
@@ -174,7 +174,7 @@ public class QuintoImpactoApplication {
             Course course7 = new Course(
                     "QA Tester",
                     "play a critical role in delivering high quality, perfectly-functioning software and web applications to customers. ",
-                    List.of(Shift.AFTERNOON),
+                    List.of(Shift.AFTERNOON, Shift.NIGHT),
                     "./img/Courses/card7.jpg");
             //Save Course 7
             courseRepository.save(course7);
@@ -183,7 +183,7 @@ public class QuintoImpactoApplication {
             Course course8 = new Course(
                     "Digital Design",
                     "is a type of visual communication that presents information or a product or service through a digital interface. ",
-                    List.of(Shift.NIGHT),
+                    List.of(Shift.MORNING, Shift.AFTERNOON,Shift.NIGHT),
                     "./img/Courses/card8.jpg");
             //Save Course 8
             courseRepository.save(course8);
@@ -192,7 +192,7 @@ public class QuintoImpactoApplication {
             Course course9 = new Course(
                     "Administrative Assistant",
                     "making travel and meeting arrangements, preparing reports and maintaining appropriate filing systems. ",
-                    List.of(Shift.NIGHT),
+                    List.of(Shift.MORNING, Shift.AFTERNOON,Shift.NIGHT),
                     "./img/Courses/card9.jpg");
             //Save Course 9
             courseRepository.save(course9);

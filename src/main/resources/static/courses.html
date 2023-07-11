@@ -29,24 +29,29 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end gap-3" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                            <a class="nav-link  texto-nav hover-a text-center" aria-current="page"
-                                href="./index.html">Home</a>
-                            <a class="nav-link activo texto-nav hover-a text-center" href="#">Courses</a>
+                            <a class="nav-link activo texto-nav hover-a text-center" aria-current="page"
+                                href="#">Home</a>
+                                <template v-if="rol === 'ADMIN' || rol === 'STUDENT' ">
+                            <a class="nav-link texto-nav hover-a text-center" href="./courses.html">Courses</a>
+                                </template>
                             <template v-if="rol === 'ADMIN'">
                                 <a class="nav-link texto-nav hover-a text-center"
                                     href="./manager.html">Administrator</a>
                             </template>
                             <template v-if="rol === 'TEACHER'">
                                 <a class="nav-link texto-nav hover-a text-center"
-                                    href="./teacherManager.html">Teacher</a>
+                                    href="./managerTeacher.html">TeacherCourses</a>
                             </template>
                         </div>
                         <template v-if="rol === 'VISITOR'">
                         <button id="botonIngresar" type="button" class="nav-link texto-nav hover-a text-center" data-bs-toggle="modal" data-bs-target="#ModalForm">Login</button>
                         </template>
                         <template v-else>
+                            <!-- <template v-for="user of currentUser" >
+                            <h2 class= "texto-nav text-black">{{user.name}}</h2>
+                            </template> -->
                             <a class="nav-link texto-nav hover-iconos texto-iconos text-center" href="#"
-                                ><i @click="salir" class="bi bi-box-arrow-right"></i
+                                >log out<i @click="salir" class="bi bi-box-arrow-right"></i
                             ></a>
                         </template>
                     </div>
@@ -101,14 +106,16 @@
                         <a href="#"data-bs-toggle="modal"
                         data-bs-target="#exampleProduct-xl"
                         @click="obtenerIdCurso(course.id)">More Information</a>
-                        <a href="#"data-bs-toggle="modal"
-                        data-bs-target="#exampleProduct-xl"
-                        @click="obtenerIdCurso(course.id)">Inscription</a>
+                        <!-- <a href="#"data-bs-toggle="modal"
+                        data-bs-target="#exampleCourse"
+                        @click="inscription(idCourse, shiftSelected)"
+                        >Inscription</a> -->
                     </div>
                 </div>
 
-            </div>
-        </template>
+                </div>
+       
+                 </template>
         </main>
 
         <footer class="footer pt-5">
@@ -308,15 +315,45 @@
                             <div class="d-flex flex-wrap align-items-start gap-3">
                                 
                                 </div>
-                                
+
+                                <div class="modal-footer gap-1 container-fluid" id="contenedorButtons">
+                                    <a class="ov-btn-grow-box fs-4" href="#"data-bs-toggle="modal"
+                                    data-bs-target="#exampleCourse"
+                                    @click="inscription"
+                                    >INSCRIPTION</a>
+                                    <button type="button" class="ov-btn-grow-box fs-4" data-bs-dismiss="modal">CERRAR</button>
+                                </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer gap-1 container-fluid" id="contenedorButtons">
-                        <button type="button" class="ov-btn-grow-box fs-4" data-bs-dismiss="modal">CERRAR</button>
+                   
+                </div>
+
+                 <!-- MODAL INSCRIPTION -->
+                
+                 <div  v-if="rol !== 'VISITOR'" class="modal fade" id="exampleCourse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+                    <div class="modal-dialog modal-xl modal-dialog-centered justify-content-center align-items-center" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body d-flex flex-column flex-lg-row gap-2">
+                                <div>
+                                    <select v-model="newInscription.shift" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                        
+                                        <option selected>Open this select menu</option>
+                                    <template v-for="shift of cursoPorId.shifts">
+                                        <option :value="shift">{{shift}}</option>
+                                    </template>
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer gap-1 container-fluid" id="contenedorButtons">
+                                <button type="button" class="ov-btn-grow-box fs-4" data-bs-dismiss="modal" @click="sendInscription">CONFIRM</button>
+                                <button type="button" class="ov-btn-grow-box fs-4" data-bs-dismiss="modal">CERRAR</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
 			
         <!-- MODAL POLITICAS -->
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -16,18 +16,28 @@ createApp({
                 address:'',
                 password:'',
                 },
+            newInscription:{
+                user_id:'',
+                course_id:'',
+                shift:''
+            },    
             search: '',
 			passwordLogin:'',
 			emailLogin:'',
 			cursoPorId:'',
 			imgCursoPorId:'',
-            coursesFilter:""
+            coursesFilter:"",
+            shiftSelect:"",
+            currentUser:"",
+            idCourse:"",
+            
 			
 		};
 	},
 	created() {
 		this.data();
 		this.Mcourses();
+        this.inscription();
 	},
 	mounted() {
 		this.roles();
@@ -48,10 +58,12 @@ createApp({
 				.get('/api/users')
 				.then(response => {
 					this.datos = response.data;
+                    
 				})
 				.catch(error => console.log(error));
 		},
 		obtenerIdCurso(id) {
+            this.newInscription.course_id = id;
 			axios
 				.get('/api/courses/' + id)
 				.then(response => {
@@ -120,6 +132,63 @@ createApp({
 					})
 				);
 		},
+        inscription(){
+                if (this.rol === 'VISITOR') {
+                    Swal.fire('YOU HAVE TO LOGIN BEFORE');
+                } else {
+                    axios.get('/api/users/current')
+                    .then(response => {
+                        console.log(response.data)
+                        this.currentUser = response.data
+                        this.newInscription.user_id = response.data.id;
+                        console.log(this.newInscription.user_id)
+                        ;
+                        })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
+        },
+        sendInscription()
+         { 
+            axios.post('/api/inscriptions', this.newInscription)
+                .then(()=> {
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Inscription Complete',
+                        showConfirmButton: false,
+                        timer: 2000,
+                    })
+                })
+                .catch(
+                    (error) =>{
+                        console.log(error),
+                        Swal.fire({
+                            icon: 'error',
+                            text: error.response.data,
+                            confirmButtonColor: '#7c601893',
+                        })
+                    })
+
+
+        //     axios.post('/api/inscriptions', this.newInscription)
+        //                 .then(()=> {
+                            
+        //                     Swal.fire({
+        //                         icon: 'success',
+        //                         text: 'Inscription Complete',
+        //                         showConfirmButton: false,
+        //                         timer: 2000,
+        //                     })
+        //             }).catch(error =>
+        //                 console.log(error),
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     text: error.response.data,
+        //                     confirmButtonColor: '#7c601893',
+        //                 })
+        //             );
+        },
 		salir() {
 			Swal.fire({
 				title: '¿Are you Sure that you log out?',

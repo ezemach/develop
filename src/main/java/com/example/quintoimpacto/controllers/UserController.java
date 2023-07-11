@@ -39,6 +39,13 @@ public class UserController {
         return "VISITOR";
     }
 
+    // Obtain current user
+    @GetMapping("/api/users/current")
+    public UserDTO getInfoCurrent(Authentication authentication){
+        // Get user authenticated
+        User userAuthenticated = userRepository.findByEmail(authentication.getName());
+        return new UserDTO(userAuthenticated);
+    }
 
 
     // Create user

@@ -77,9 +77,8 @@
                                 <span class="e">{{user.state}}</span>
                             </div>
                             <div class="d-flex justify-content-center flex-column div-iconos-admin gap-2 p-2">
-                                <i class="bi bi-pencil" data-bs-toggle="modal" data-bs-target="" @click="">Modificar</i>
-                                    <i class="bi bi-trash3">Desactivar</i>
-                                    <i class="bi bi-trash3">Activar</i>
+                                <!-- <i class="bi bi-pencil hover-a" data-bs-toggle="modal" data-bs-target="" @click="">Modificar</i> -->
+                                    <i class="bi bi-trash3 hover-a" @click="deleteUser(user.id)" >Delete</i>
                             </div>
                         </div>
                     </template>
@@ -97,9 +96,25 @@
                                 <span class="e">{{user.state}}</span>
                             </div>
                             <div class="d-flex justify-content-center flex-column div-iconos-admin gap-2 p-2">
-                                <i class="bi bi-pencil" data-bs-toggle="modal" data-bs-target="" @click="">Modificar</i>
-                                    <i class="bi bi-trash3">Desactivar</i>
-                                    <i class="bi bi-trash3">Activar</i>
+                                <!-- <i class="bi bi-pencil" data-bs-toggle="modal" data-bs-target="" @click="">Modificar</i> -->
+                                <i class="bi bi-trash3 hover-a" @click="deleteUser(user.id)" >Delete</i>
+                            </div>
+                        </div>
+                    </template>
+                    </div>
+                    <h2 class="texto-producto pb-4  text-center pe-3 mt-2">COURSES</h2>
+                    <div class="d-flex flex-wrap div-usuarios gap-3 justify-content-center py-3" id="managerUser">
+                    <template v-for="course of coursesFilter">
+                        <div class="div-productos-admin container-fluid align-items-center flex-wrap gap-3 py-3 mx-5">
+                            <div class="div-texto-admin d-flex flex-column ms-3 justify-content-center">
+                                <h5 class="">{{course.name}}</h5>
+                                <h4 class="">{{course.description}}</h4>
+                                <span class="">{{course.shifts}}</span>
+                                
+                            </div>
+                            <div class="d-flex justify-content-center flex-column div-iconos-admin gap-2 p-2">
+                                <!-- <i class="bi bi-pencil" data-bs-toggle="modal" data-bs-target="" @click="">Modificar</i> -->
+                                <i class="bi bi-trash3 hover-a" @click="deleteCourse(course.id)" >Delete</i>
                             </div>
                         </div>
                     </template>
