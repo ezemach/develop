@@ -15,6 +15,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+@CrossOrigin(origins={"*"})
 @RestController
 public class CourseController {
     @Autowired
@@ -27,6 +28,19 @@ public class CourseController {
                 .map(course -> new CourseDTO(course))
                 .collect(toList());
     }
+
+    @GetMapping("/api/courses/{id}")
+    public ResponseEntity<Object> idCourse(@PathVariable Long id){
+        Course courseId = courseRepository.findById(id).orElse(null);
+        // Validation course
+        if(courseId != null){
+           return new ResponseEntity<>(new CourseDTO(courseId), HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>("Course doesn't exist", HttpStatus.FORBIDDEN);
+    }
+
+
+
     // Create a new course
     @PostMapping("/api/courses")
     public ResponseEntity<Object> createCourse(@RequestBody CourseApplicationDTO courseApplicationDTO){
@@ -79,6 +93,7 @@ public class CourseController {
             courseToModify.setName(courseApplicationDTO.getName()); // Name
             courseToModify.setDescription(courseApplicationDTO.getDescription()); // Description
             courseToModify.setShifts(courseApplicationDTO.getShifts().stream().collect(toList())); // Shifts
+
             // Save course
             courseRepository.save(courseToModify);
 

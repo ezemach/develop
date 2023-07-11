@@ -3,56 +3,63 @@ const {createApp} = Vue;
 createApp({
 	data() {
 		return {
-			rol: '',
-			Courses:"",
-			correo: '',
-			correoRegistro: '',
-			contraseña: '',
-			contraseñaRegistro: '',
-			Nombre: '',
-			Apellido: '',
-			telefono: '',
+			rol:'',
+			newUser:{
+			ssn:'',	
+			name:'',
+			lastName:'',
+			email:'',
+			phone:'',
+			birthday:'',
+			state:'',
+			city:'',
+			address:'',
+			password:'',
+			},
+			passwordLogin:'',
+			emailLogin:'',
+			cursoPorId:'',
+			imgCursoPorId:''
+			
 		};
 	},
 	created() {
 		this.data();
-		this.Courses();
+		this.courses();
 	},
 	mounted() {
 		this.roles();
 	},
 	methods: {
-		Courses() {
+		courses() {
 			axios
 				.get('/api/courses')
 				.then(response => {
-					this.productos = response.data;
+					this.courses = response.data.slice(0,3);
+					console.log(this.courses.slice(0,3))
 				})
 				.catch(error => console.log(error));
 		},
 		data() {
 			axios
-				.get('/api/clientes/actual')
+				.get('/api/users')
 				.then(response => {
 					this.datos = response.data;
-					this.clienteIngresado = response.data;
-					this.verificado = response.data.verificado === true;
 				})
 				.catch(error => console.log(error));
 		},
-		roles() {
+		obtenerIdCurso(id) {
 			axios
-				.get('/api/clientes/actual/rol')
+				.get('/api/courses/' + id)
 				.then(response => {
-					this.rol = response.data;
+					this.cursoPorId = response.data;
+					console.log(this.cursoPorId)
+					this.imgCursoPorId = this.cursoPorId.imageUrl;
 				})
-				.catch(error => {
-					console.log(error);
-				});
-		},
+				.catch(error => console.log(error))},
 		ingresar() {
 			axios
-				.post('/api/login', 'correo=' + this.correo + '&contraseña=' + this.contraseña)
+				.post('/api/login', 'email=' + this.emailLogin + '&password=' + this.passwordLogin)
 				.then(response => {
 					Swal.fire({
 						icon: 'success',
@@ -60,12 +67,12 @@ createApp({
 						showConfirmButton: false,
 						timer: 2000,
 					}).then(() => {
-						if (this.correo == 'admin@gmail.com') {
+						if (this.email == 'admin@admin.com') {
 							window.location.replace('/index.html');
 						} else {
 							window.location.replace('/index.html');
 						}
-					});
+					 });
 				})
 				.catch(error =>
 					Swal.fire({
@@ -75,39 +82,34 @@ createApp({
 					})
 				);
 		},
+		roles() {
+			axios
+				.get('/api/users/current/rol')
+				.then(response => {
+					this.rol = response.data;
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		},
 		register() {
 			axios
 				.post(
-					'/api/clientes',
-					'primerNombre=' +
-						this.primerNombre +
-						'&segundoNombre=' +
-						this.segundoNombre +
-						'&primerApellido=' +
-						this.primerApellido +
-						'&segundoApellido=' +
-						this.segundoApellido +
-						'&telefono=' +
-						this.telefono +
-						'&correo=' +
-						this.correoRegistro +
-						'&contraseña=' +
-						this.contraseñaRegistro
+					'/api/users',this.newUser	
 				)
 				.then(response => {
 					Swal.fire({
 						icon: 'success',
-						text: 'Se envio a tu correo la validacion',
+						text: 'Registrado con Exito',
 						showConfirmButton: false,
 						timer: 2000,
 					}).then(() => {
-						this.correo = this.correoRegistro;
-						this.contraseña = this.contraseñaRegistro;
+
 						window.location.replace('/index.html');
-						// this.ingresar();
 					});
 				})
 				.catch(error =>
+					console.log(error),
 					Swal.fire({
 						icon: 'error',
 						text: error.response.data,
@@ -117,7 +119,7 @@ createApp({
 		},
 		salir() {
 			Swal.fire({
-				title: '¿Estas seguro que quieres salir de tu cuenta?',
+				title: '¿Are you Sure that you log out?',
 				inputAttributes: {
 					autocapitalize: 'off',
 				},
@@ -142,19 +144,19 @@ createApp({
 				allowOutsideClick: () => !Swal.isLoading(),
 			});
 		},
-	},
-	
+		
+}
 }).mount('#app');
 
-window.addEventListener('load', () => {
-	const loader = document.querySelector('.loader');
+// window.addEventListener('load', () => {
+// 	const loader = document.querySelector('.loader');
 
-	loader.classList.add('loader-hidden');
+// 	loader.classList.add('loader-hidden');
 
-	loader.addEventListener('transitioned', () => {
-		document.body.removeChild('loader');
-	});
-});
+// 	loader.addEventListener('transitioned', () => {
+// 		document.body.removeChild('loader');
+// 	});
+// });
 
 /* Contraseña */
 const pwShowHide = document.querySelectorAll('.pw-hide');

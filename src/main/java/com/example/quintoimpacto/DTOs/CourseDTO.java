@@ -3,6 +3,7 @@ package com.example.quintoimpacto.DTOs;
 import com.example.quintoimpacto.models.Course;
 import com.example.quintoimpacto.models.Shift;
 
+import java.util.List;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;

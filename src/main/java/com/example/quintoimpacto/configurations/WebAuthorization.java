@@ -21,6 +21,7 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/login", "/api/logout", "/api/users").permitAll()
+                .antMatchers(HttpMethod.GET,"/index.html", "/css/index.css", "/courses.html","/js/index.js","/js/courses.js", "/img/**","/img/Courses/**","/api/users/current/rol", "/api/courses","/api/courses/{id}", "/api/users").permitAll()
 
                 // USER TEACHER
                 .antMatchers(HttpMethod.GET,
@@ -33,16 +34,19 @@ public class WebAuthorization {
 
                 // ADMIN
                 .antMatchers(HttpMethod.GET,
-                        "/api/users",
-                        "/api/courses",
+                        //"/api/users",
+                        "/manager.html",
+                        "/js/manager.js",
                         "/api/inscriptions",
                         "/api/users/{id}",
                         "/h2-console/**").hasAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.POST,
                         "/api/courses",
-                        "/api/inscriptions",
-                        "/api/users").hasAuthority("ADMIN")
+
+                        "/api/inscriptions"
+                        //"/api/users"
+                ).hasAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.PUT,
                         "/api/users/{id}",
@@ -56,8 +60,8 @@ public class WebAuthorization {
                 .anyRequest().denyAll();
 
         httpSecurity.formLogin()
-                .usernameParameter("Email")
-                .passwordParameter("Password")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .loginPage("/api/login");
 
         httpSecurity.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
